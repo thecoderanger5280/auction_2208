@@ -11,6 +11,13 @@
 
 ## Iteration 1 - Items, Attendees & Auctions
 
+Graded Items:
+ 1. Create an Item: `Item.new`
+ 1. Create an Attendee: `Attendee.new`
+ 1. Create an Auction: `Auction.new`
+ 1. Add an Item to an Auction: `Auction #add_item`
+ 1. Return the list of item names from an Auction: `Auction #item_names`
+
 Use TDD to create Item, Attendee, & Auction that will respond to the interaction pattern below:
 
 ```ruby
@@ -57,6 +64,12 @@ pry(main)> auction.item_names
 ```
 
 ## Iteration 2 - Bidding!
+
+Graded Items:
+ 1. Add a bid to an Item: `Item #add_bid`
+ 1. Return the current high bid of an Item: `Item #current_high_bid`
+ 1. Return the list of unpopular items from an Auction: `Auction #unpopular_items`
+ 1. Return the potential revenue from an Auction: `Auction #potential_revenue`
 
 Use TDD to update your classes to respond to the following interaction pattern.  Some notes:
 - `unpopular_items` are those items which have no bids.
@@ -142,9 +155,15 @@ pry(main)> auction.potential_revenue
 
 ## Iteration 3 - More bidding stuff!
 
+Graded Items:
+ 1. Return the list of bidder names from an Auction: `Auction #bidders`
+ 1. Close bidding on an Item: `Item #close_bidding`
+ 1. Return a hash of bidder information: `Auction #bidder_info`
+
 Use TDD to update your classes to respond to the following interaction pattern.  Some notes:
+- `bidders` should list the names of each attendee that bid on the item.
+- `close_bidding` should update the item so that it will not accept additional bids.
 - `bidder_info` should return a hash with keys that are attendees, and values that are a hash with that attendee's budget and an array of items that attendee has bid on.
-- `close_bidding` should update the item so that it will not accept additional bids
 
 ```ruby
 pry(main)> require './lib/item'
@@ -174,7 +193,7 @@ pry(main)> item5 = Item.new('Forever Stamps')
 pry(main)> attendee1 = Attendee.new({name: 'Megan', budget: '$50'})
 #=> #<Attendee:0x00007ff177a45108 ...>
 
-pry(main)> attendee2 = Attendee.new({name: 'Bob', budget: '$75}')
+pry(main)> attendee2 = Attendee.new({name: 'Bob', budget: '$75'})
 #=> #<Attendee:0x00007ff17816a4b0 ...>
 
 pry(main)> attendee3 = Attendee.new({name: 'Mike', budget: '$100'})
@@ -204,6 +223,16 @@ pry(main)> item3.add_bid(attendee2, 15)
 pry(main)> auction.bidders
 #=> ["Megan", "Bob", "Mike"]
 
+pry(main)> item1.bids
+#=> {#<Attendee:0x00007ff177a45108 ...> => 22, #<Attendee:0x00007ff17816a4b0 ...> => 20}
+
+pry(main)> item1.close_bidding
+
+pry(main)> item1.add_bid(@attendee3, 70)
+
+pry(main)> item1.bids
+#=> {#<Attendee:0x00007ff177a45108 ...> => 22, #<Attendee:0x00007ff17816a4b0 ...> => 20}
+
 pry(main)> auction.bidder_info
 #=> {
  #    #<Attendee:0x00007ff177a45108 @budget=50, @name="Megan"> =>
@@ -223,19 +252,13 @@ pry(main)> auction.bidder_info
  #      }
  #   }
 
-pry(main)> item1.bids
-#=> {#<Attendee:0x00007ff177a45108 ...> => 22, #<Attendee:0x00007ff17816a4b0 ...> => 20}
-
-pry(main)> item1.close_bidding
-
-pry(main)> item1.add_bid(@attendee3, 70)
-
-pry(main)> item1.bids
-#=> {#<Attendee:0x00007ff177a45108 ...> => 22, #<Attendee:0x00007ff17816a4b0 ...> => 20}
-
 ```
 
-## Iteration 4 - Dates ! And closing the auction
+## Iteration 4 - Dates! And closing the auction
+
+Graded Items:
+ 1. Return the creation date of an Auction: `Auction #date`
+ 1. Close an Auction: `Auction #close_auction`
 
 Use TDD to update your classes to respond to the following interaction pattern.  Some notes:
 - An Auction will now be created with a date - whatever date the event is created on through the use of `Date.today`. The addition of a date to the event should NOT break any previous tests.  The `date` method will return a string representation of the date - 'dd/mm/yyyy'. We want you to test this in with a date that is IN THE PAST. In order to test the date method in a way that will work today, tomorrow and on any date in the future, you will need to use a stub :)
