@@ -73,7 +73,7 @@ Graded Items:
 
 Use TDD to update your classes to respond to the following interaction pattern.  Some notes:
 - `unpopular_items` are those items which have no bids.
-- `potential_revenue` is the total possible sale price of the items (the items highest bid)
+- `potential_revenue` is the total possible sale price of all items (the item's highest bid)
 
 ```ruby
 pry(main)> require './lib/item'
