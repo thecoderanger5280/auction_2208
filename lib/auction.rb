@@ -23,4 +23,12 @@ class Auction
       item.bids.values.max
     end.sum
   end
+
+  def bidders
+    bid_items = @items.find_all { |item| item.bids != {}}
+    bidders = bid_items.map do |item|
+      item.bids.keys
+    end
+    bidders.flatten.uniq.map(&:name)
+  end
 end
