@@ -16,4 +16,11 @@ class Auction
   def unpopular_items
     @items.find_all { |item| item.bids == {}}
   end
+
+  def potential_revenue
+    bid_items = @items.find_all { |item| item.bids != {}}
+    bid_items.map do |item|
+      item.bids.values.max
+    end.sum
+  end
 end
