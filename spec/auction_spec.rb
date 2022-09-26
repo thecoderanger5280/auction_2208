@@ -163,4 +163,64 @@ RSpec.describe Auction do
       })
     end
   end
+
+  describe '#date' do
+    it 'can list the current date' do
+      auction = Auction.new
+      item1 = Item.new('Chalkware Piggy Bank')
+      item2 = Item.new('Bamboo Picture Frame')
+      item3 = Item.new('Homemade Chocolate Chip Cookies')
+      item4 = Item.new('2 Days Dogsitting')
+      item5 = Item.new('Forever Stamps')
+      attendee1 = Attendee.new({name: 'Megan', budget: '$50'})
+      attendee2 = Attendee.new({name: 'Bob', budget: '$75'})
+      attendee3 = Attendee.new({name: 'Mike', budget: '$100'})
+      auction.add_item(item1)
+      auction.add_item(item2)
+      auction.add_item(item3)
+      auction.add_item(item4)
+      auction.add_item(item5)
+
+      expect(auction.date).to eq('26/09/2022')
+      allow(autcion).to receive(:date).and_return('26/09/2021')
+      expect(auction.date).to eq('26/09/2021')
+      # allow(Time).to receive(:now).and_return(Time.new(2001,2,3).to_date)
+      # expect(auction.date).to eq('26/09/2021')
+      # require 'pry'; binding.pry
+    end
+  end
+
+  describe 'close_auction' do
+      it 'can list who bought each of the items' do
+        auction = Auction.new
+      item1 = Item.new('Chalkware Piggy Bank')
+      item2 = Item.new('Bamboo Picture Frame')
+      item3 = Item.new('Homemade Chocolate Chip Cookies')
+      item4 = Item.new('2 Days Dogsitting')
+      item5 = Item.new('Forever Stamps')
+      attendee1 = Attendee.new({name: 'Megan', budget: '$50'})
+      attendee2 = Attendee.new({name: 'Bob', budget: '$75'})
+      attendee3 = Attendee.new({name: 'Mike', budget: '$100'})
+      auction.add_item(item1)
+      auction.add_item(item2)
+      auction.add_item(item3)
+      auction.add_item(item4)
+      auction.add_item(item5)
+
+      item1.add_bid(attendee1, 22)
+      item1.add_bid(attendee2, 20)
+      item4.add_bid(attendee2, 30)
+      item4.add_bid(attendee3, 50)
+      item3.add_bid(attendee2, 15)
+      item5.add_bid(attendee1, 35)
+
+      expect(auction.close_auction).to eq({
+        item1 => attendee2,
+        item2 => 'Not Sold',
+        item3 => attendee2,
+        item4 => attendee3,
+        item5 => attendee1
+      })
+      end
+  end
 end
